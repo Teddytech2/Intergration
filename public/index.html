@@ -1,0 +1,1049 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#08090d" />
+  <meta name="color-scheme" content="dark" />  <title>TEDDY-XMD — Pair Device</title>  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+    :root {
+      --bg: #08090d;
+      --card: rgba(18, 20, 29, 0.72);
+      --card-solid: #12141d;
+      --border: rgba(255, 255, 255, 0.09);
+      --border-hover: rgba(255, 255, 255, 0.16);
+      --text: #f7f7fb;
+      --muted: #9296a8;
+      --accent: #a855f7;
+      --accent-2: #ec4899;
+      --success: #22c55e;
+      --danger: #ef4444;
+      --input: rgba(255, 255, 255, 0.045);
+      --shadow: rgba(0, 0, 0, 0.45);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+
+      background:
+        radial-gradient(
+          circle at 15% 15%,
+          rgba(168, 85, 247, 0.18),
+          transparent 30%
+        ),
+        radial-gradient(
+          circle at 85% 85%,
+          rgba(236, 72, 153, 0.13),
+          transparent 30%
+        ),
+        var(--bg);
+
+      color: var(--text);
+      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* Background decoration */
+
+    .orb {
+      position: fixed;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      filter: blur(90px);
+      opacity: .15;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .orb.one {
+      background: #a855f7;
+      top: -120px;
+      left: -100px;
+    }
+
+    .orb.two {
+      background: #ec4899;
+      bottom: -130px;
+      right: -100px;
+    }
+
+    /* Main container */
+
+    .wrapper {
+      width: 100%;
+      max-width: 440px;
+    }
+
+    .brand {
+      text-align: center;
+      margin-bottom: 18px;
+    }
+
+    .logo {
+      width: 58px;
+      height: 58px;
+      margin: 0 auto 14px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      border-radius: 18px;
+
+      background:
+        linear-gradient(
+          135deg,
+          rgba(168, 85, 247, .95),
+          rgba(236, 72, 153, .95)
+        );
+
+      box-shadow:
+        0 12px 35px rgba(168, 85, 247, .25);
+
+      font-size: 27px;
+    }
+
+    .brand h1 {
+      font-size: 1.35rem;
+      font-weight: 800;
+      letter-spacing: -.04em;
+    }
+
+    .brand h1 span {
+      background: linear-gradient(
+        90deg,
+        #c084fc,
+        #f472b6
+      );
+
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .brand p {
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: .82rem;
+    }
+
+    /* Card */
+
+    .card {
+      position: relative;
+
+      padding: 26px;
+
+      background: var(--card);
+
+      border: 1px solid var(--border);
+      border-radius: 24px;
+
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+
+      box-shadow:
+        0 30px 80px var(--shadow),
+        inset 0 1px 0 rgba(255,255,255,.035);
+
+      animation: cardIn .55s ease;
+    }
+
+    @keyframes cardIn {
+      from {
+        opacity: 0;
+        transform: translateY(15px) scale(.98);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .top-line {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 22px;
+    }
+
+    .title {
+      font-size: .95rem;
+      font-weight: 700;
+    }
+
+    .secure {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+
+      color: #9ee6b5;
+      font-size: .68rem;
+      font-weight: 600;
+
+      padding: 6px 9px;
+      border-radius: 999px;
+
+      background: rgba(34,197,94,.08);
+      border: 1px solid rgba(34,197,94,.14);
+    }
+
+    .secure-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--success);
+      box-shadow: 0 0 10px var(--success);
+    }
+
+    /* Form */
+
+    .field {
+      margin-bottom: 14px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+
+      color: #b6bac9;
+      font-size: .74rem;
+      font-weight: 600;
+    }
+
+    .input-wrap {
+      position: relative;
+    }
+
+    .input-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+
+      transform: translateY(-50%);
+
+      font-size: 17px;
+      opacity: .7;
+    }
+
+    input {
+      width: 100%;
+      height: 52px;
+
+      padding: 0 14px 0 44px;
+
+      border: 1px solid var(--border);
+      border-radius: 14px;
+
+      background: var(--input);
+      color: var(--text);
+
+      font-family: inherit;
+      font-size: .92rem;
+
+      outline: none;
+
+      transition:
+        border .2s ease,
+        background .2s ease,
+        box-shadow .2s ease;
+    }
+
+    input::placeholder {
+      color: #666a79;
+    }
+
+    input:focus {
+      border-color: rgba(168,85,247,.7);
+
+      background: rgba(168,85,247,.045);
+
+      box-shadow:
+        0 0 0 4px rgba(168,85,247,.08);
+    }
+
+    .hint {
+      margin-top: 7px;
+      color: #696d7c;
+      font-size: .68rem;
+    }
+
+    /* Button */
+
+    button {
+      width: 100%;
+      height: 52px;
+
+      margin-top: 8px;
+
+      border: 0;
+      border-radius: 14px;
+
+      background:
+        linear-gradient(
+          135deg,
+          #a855f7,
+          #ec4899
+        );
+
+      color: white;
+
+      font-family: inherit;
+      font-size: .88rem;
+      font-weight: 700;
+
+      cursor: pointer;
+
+      box-shadow:
+        0 12px 28px rgba(168,85,247,.22);
+
+      transition:
+        transform .2s ease,
+        box-shadow .2s ease,
+        opacity .2s ease;
+    }
+
+    button:hover:not(:disabled) {
+      transform: translateY(-1px);
+
+      box-shadow:
+        0 16px 35px rgba(168,85,247,.3);
+    }
+
+    button:active:not(:disabled) {
+      transform: translateY(0);
+    }
+
+    button:disabled {
+      opacity: .55;
+      cursor: not-allowed;
+    }
+
+    .btn-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .spinner {
+      width: 16px;
+      height: 16px;
+
+      border: 2px solid rgba(255,255,255,.3);
+      border-top-color: white;
+
+      border-radius: 50%;
+
+      animation: spin .7s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* Error */
+
+    .err {
+      min-height: 18px;
+      margin-top: 9px;
+
+      color: #ff7777;
+      font-size: .72rem;
+      text-align: center;
+    }
+
+    /* Result */
+
+    .result {
+      display: none;
+
+      margin-top: 22px;
+      padding-top: 22px;
+
+      border-top: 1px solid var(--border);
+
+      text-align: center;
+
+      animation: fadeIn .35s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .result-title {
+      font-size: .86rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .result-sub {
+      color: var(--muted);
+      font-size: .7rem;
+      line-height: 1.5;
+    }
+
+    .code-box {
+      position: relative;
+
+      margin: 15px 0;
+
+      padding: 15px;
+
+      border: 1px dashed rgba(168,85,247,.55);
+      border-radius: 16px;
+
+      background:
+        linear-gradient(
+          135deg,
+          rgba(168,85,247,.07),
+          rgba(236,72,153,.05)
+        );
+    }
+
+    .code {
+      font-family: "Courier New", monospace;
+      font-size: 1.55rem;
+      font-weight: 800;
+      letter-spacing: .12em;
+
+      color: #f4e9ff;
+
+      word-break: break-all;
+    }
+
+    .copy-btn {
+      height: 38px;
+      margin-top: 11px;
+
+      background: rgba(255,255,255,.07);
+      border: 1px solid var(--border);
+
+      box-shadow: none;
+
+      font-size: .72rem;
+    }
+
+    .copy-btn:hover {
+      background: rgba(255,255,255,.11);
+      box-shadow: none;
+    }
+
+    /* Status */
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+
+      padding: 7px 11px;
+
+      border-radius: 999px;
+
+      background: rgba(239,68,68,.07);
+      border: 1px solid rgba(239,68,68,.12);
+
+      color: #ff9a9a;
+
+      font-size: .68rem;
+    }
+
+    .status.on {
+      background: rgba(34,197,94,.07);
+      border-color: rgba(34,197,94,.13);
+      color: #91e5aa;
+    }
+
+    .dot {
+      width: 7px;
+      height: 7px;
+
+      border-radius: 50%;
+      background: var(--danger);
+
+      box-shadow: 0 0 8px rgba(239,68,68,.5);
+    }
+
+    .status.on .dot {
+      background: var(--success);
+      box-shadow: 0 0 8px rgba(34,197,94,.5);
+    }
+
+    /* Feature pills */
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 7px;
+
+      margin-top: 20px;
+    }
+
+    .feature {
+      padding: 10px 6px;
+
+      text-align: center;
+
+      border: 1px solid var(--border);
+      border-radius: 12px;
+
+      background: rgba(255,255,255,.025);
+
+      color: #a5a8b6;
+      font-size: .61rem;
+      line-height: 1.35;
+    }
+
+    .feature strong {
+      display: block;
+      margin-bottom: 2px;
+
+      color: #e5e6ed;
+      font-size: .66rem;
+    }
+
+    /* Stats */
+
+    .stats {
+      margin-top: 18px;
+
+      text-align: center;
+
+      color: #727686;
+      font-size: .66rem;
+    }
+
+    /* Footer */
+
+    footer {
+      margin-top: 18px;
+
+      text-align: center;
+
+      color: #626674;
+      font-size: .65rem;
+      line-height: 1.6;
+    }
+
+    footer strong {
+      color: #a855f7;
+    }
+
+    footer a {
+      color: #999dac;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      color: #c084fc;
+    }
+
+    /* Mobile */
+
+    @media (max-width: 480px) {
+      body {
+        padding: 15px;
+        align-items: flex-start;
+        padding-top: 45px;
+      }
+
+      .card {
+        padding: 21px;
+        border-radius: 21px;
+      }
+
+      .brand h1 {
+        font-size: 1.2rem;
+      }
+
+      .features {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: .01ms !important;
+        transition-duration: .01ms !important;
+      }
+    }
+  </style></head><body>  <div class="orb one"></div>
+  <div class="orb two"></div>  <main class="wrapper"><div class="brand">
+  <div class="logo">🐻</div>
+
+  <h1>
+    TEDDY<span>-XMD</span>
+  </h1>
+
+  <p>
+    WhatsApp pairing portal
+  </p>
+</div>
+
+<section class="card">
+
+  <div class="top-line">
+    <div class="title">
+      Pair your device
+    </div>
+
+    <div class="secure">
+      <span class="secure-dot"></span>
+      Secure
+    </div>
+  </div>
+
+  <form id="pair-form">
+
+    <div class="field">
+      <label for="phone">
+        WhatsApp phone number
+      </label>
+
+      <div class="input-wrap">
+
+        <span class="input-icon">📱</span>
+
+        <input
+          id="phone"
+          type="tel"
+          inputmode="numeric"
+          autocomplete="tel"
+          placeholder="254712345678"
+          required
+        />
+
+      </div>
+
+      <div class="hint">
+        Enter your number with country code — digits only.
+      </div>
+    </div>
+
+    <button id="btn" type="submit">
+
+      <span class="btn-content" id="btn-content">
+        <span>Get pairing code</span>
+        <span>→</span>
+      </span>
+
+    </button>
+
+    <p class="err" id="err"></p>
+
+  </form>
+
+  <div class="result" id="result">
+
+    <div class="result-title">
+      Your pairing code
+    </div>
+
+    <p class="result-sub">
+      Open WhatsApp → Linked devices →
+      Link with phone number.
+    </p>
+
+    <div class="code-box">
+
+      <div class="code" id="code">
+        — — — —
+      </div>
+
+      <button
+        type="button"
+        class="copy-btn"
+        id="copy-btn"
+      >
+        Copy code
+      </button>
+
+    </div>
+
+    <div class="status" id="status">
+
+      <span class="dot"></span>
+
+      <span id="status-text">
+        Waiting for pairing…
+      </span>
+
+    </div>
+
+  </div>
+
+  <div class="features">
+
+    <div class="feature">
+      <strong>⚡ Fast</strong>
+      Quick pairing
+    </div>
+
+    <div class="feature">
+      <strong>🔐 Secure</strong>
+      Protected
+    </div>
+
+    <div class="feature">
+      <strong>🚫 No ID</strong>
+      Easy setup
+    </div>
+
+  </div>
+
+  <p class="stats" id="stats">
+    Loading sessions…
+  </p>
+
+</section>
+
+<footer>
+  <div>
+    Powered by <strong>Teddy Tech</strong>
+  </div>
+
+  <div>
+    <a href="/health">System status</a>
+  </div>
+</footer>
+
+  </main><script>
+const form = document.getElementById('pair-form');
+let paymentAccessToken = '';
+// Payment is deliberately held only in memory: refreshing the page resets access.
+const paymentPanel = document.createElement('section');
+paymentPanel.style.cssText = 'margin:0 0 18px;padding:16px;border:1px solid rgba(168,85,247,.45);border-radius:14px;background:rgba(168,85,247,.08);';
+paymentPanel.innerHTML = '<h3 style="margin:0 0 8px">🔐 Pairing access — KSh 30</h3><p style="margin:0 0 12px;color:#aeb2c3;font-size:14px">Pay once to request one WhatsApp pairing session. Refreshing resets access.</p><button id="paystack-pay" type="button" style="width:100%;padding:13px;border:0;border-radius:10px;background:linear-gradient(90deg,#a855f7,#ec4899);color:white;font-weight:800;cursor:pointer">Pay KSh 30 with Paystack</button><p id="payment-status" style="margin:10px 0 0;font-size:13px;color:#c4b5fd"></p>';
+form.parentNode.insertBefore(paymentPanel, form);
+form.style.display = 'none';
+const payButton = paymentPanel.querySelector('#paystack-pay');
+const paymentStatus = paymentPanel.querySelector('#payment-status');
+payButton.addEventListener('click', async () => {
+  const email = prompt('Enter your email for Paystack receipt:');
+  if (!email) return;
+  payButton.disabled = true; paymentStatus.textContent = 'Opening secure Paystack checkout…';
+  try {
+    const response = await fetch('/api/payments/initialize', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({email}) });
+    const data = await response.json();
+    if (!response.ok || !data.ok) throw new Error(data.error || 'Could not start payment.');
+    window.location.href = data.authorizationUrl;
+  } catch (e) { paymentStatus.textContent = e.message; payButton.disabled = false; }
+});
+(async function verifyReturnPayment() {
+  const params = new URLSearchParams(window.location.search);
+  const reference = params.get('reference') || params.get('trxref');
+  if (!reference) return;
+  paymentStatus.textContent = 'Verifying payment with Paystack…'; payButton.disabled = true;
+  try {
+    const response = await fetch('/api/payments/verify', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({reference}) });
+    const data = await response.json();
+    if (!response.ok || !data.ok) throw new Error(data.error || 'Payment could not be verified.');
+    paymentAccessToken = data.accessToken;
+    form.style.display = '';
+    paymentPanel.querySelector('h3').textContent = '✅ Payment verified — pairing unlocked';
+    paymentStatus.textContent = 'You can now request one pairing code. Do not refresh this page before pairing.';
+    payButton.style.display = 'none';
+  } catch (e) { paymentStatus.textContent = e.message; payButton.disabled = false; }
+  // Remove the reference from the address bar so refresh restarts the payment flow.
+  history.replaceState({}, document.title, window.location.pathname);
+})();
+const btn = document.getElementById('btn');
+const btnContent = document.getElementById('btn-content');
+
+const phoneInput = document.getElementById('phone');
+
+const errEl = document.getElementById('err');
+
+const resultEl = document.getElementById('result');
+
+const codeEl = document.getElementById('code');
+
+const copyBtn = document.getElementById('copy-btn');
+
+const statusEl = document.getElementById('status');
+const statusTextEl = document.getElementById('status-text');
+
+const statsEl = document.getElementById('stats');
+
+let pollTimer = null;
+let currentId = null;
+
+
+/* ==========================================
+   STATS
+========================================== */
+
+async function loadStats() {
+  try {
+    const r = await fetch('/api/stats', {
+      cache: 'no-store'
+    });
+
+    const d = await r.json();
+
+    statsEl.textContent =
+      `${d.active || 0} connected · ${d.total || 0} total session(s)`;
+
+  } catch {
+    statsEl.textContent = 'Session statistics unavailable';
+  }
+}
+
+loadStats();
+
+setInterval(loadStats, 15000);
+
+
+/* ==========================================
+   STATUS POLLING
+========================================== */
+
+function pollStatus(id) {
+
+  clearInterval(pollTimer);
+
+  pollTimer = setInterval(async () => {
+
+    try {
+
+      const r = await fetch(
+        '/api/status/' + encodeURIComponent(id),
+        {
+          cache: 'no-store'
+        }
+      );
+
+      const d = await r.json();
+
+      if (d.status === 'connected') {
+
+        statusEl.classList.add('on');
+
+        statusTextEl.textContent =
+          `Connected ✓${d.pluginCount ? ` · ${d.pluginCount} plugins` : ''}`;
+
+        clearInterval(pollTimer);
+
+        loadStats();
+      }
+
+      else if (
+        d.status === 'disconnected' ||
+        d.status === 'none'
+      ) {
+
+        statusEl.classList.remove('on');
+
+        statusTextEl.textContent =
+          'Disconnected — please try again.';
+
+        clearInterval(pollTimer);
+      }
+
+    } catch {
+      // Keep polling if temporary network failure occurs.
+    }
+
+  }, 3000);
+}
+
+
+/* ==========================================
+   COPY PAIRING CODE
+========================================== */
+
+copyBtn.addEventListener('click', async () => {
+
+  const code = codeEl.textContent.trim();
+
+  if (
+    !code ||
+    code.includes('already') ||
+    code.includes('—')
+  ) {
+    return;
+  }
+
+  try {
+
+    await navigator.clipboard.writeText(code);
+
+    copyBtn.textContent = '✓ Copied';
+
+    setTimeout(() => {
+      copyBtn.textContent = 'Copy code';
+    }, 1800);
+
+  } catch {
+
+    copyBtn.textContent = 'Copy failed';
+
+    setTimeout(() => {
+      copyBtn.textContent = 'Copy code';
+    }, 1800);
+  }
+});
+
+
+/* ==========================================
+   PHONE INPUT
+========================================== */
+
+phoneInput.addEventListener('input', () => {
+
+  phoneInput.value =
+    phoneInput.value.replace(/\D/g, '');
+
+});
+
+
+/* ==========================================
+   PAIRING
+========================================== */
+
+form.addEventListener('submit', async (e) => {
+
+  e.preventDefault();
+
+  errEl.textContent = '';
+
+  resultEl.style.display = 'none';
+
+  statusEl.classList.remove('on');
+
+  const phone = phoneInput.value.trim();
+
+  if (!phone) {
+
+    errEl.textContent =
+      'Please enter your WhatsApp number.';
+
+    return;
+  }
+
+  if (phone.length < 8) {
+
+    errEl.textContent =
+      'Please enter a valid phone number.';
+
+    return;
+  }
+
+  btn.disabled = true;
+
+  btnContent.innerHTML = `
+    <span class="spinner"></span>
+    <span>Requesting code…</span>
+  `;
+
+  try {
+
+    const r = await fetch('/api/pair', {
+
+      method: 'POST',
+
+      headers: {
+        'Content-Type': 'application/json'
+      },
+
+      body: JSON.stringify({
+        phone,
+        accessToken: paymentAccessToken
+      })
+
+    });
+
+    const d = await r.json();
+
+    if (!r.ok || !d.ok) {
+      throw new Error(
+        d.error || 'Could not get a pairing code.'
+      );
+    }
+
+    resultEl.style.display = 'block';
+    paymentAccessToken = '';
+    form.style.display = 'none';
+    paymentPanel.querySelector('h3').textContent = '🔐 Pairing access — KSh 30';
+    paymentStatus.textContent = 'Session used. A new pairing requires another payment.';
+    payButton.style.display = ''; payButton.disabled = false;
+
+    currentId = d.sessionId;
+
+    if (d.alreadyLinked) {
+
+      codeEl.textContent =
+        'ALREADY LINKED';
+
+      copyBtn.style.display = 'none';
+
+      statusEl.classList.add('on');
+
+      statusTextEl.textContent =
+        'Connected ✓';
+
+    } else {
+
+      copyBtn.style.display = 'block';
+
+      codeEl.textContent =
+        d.pairingCode || '— — — —';
+
+      statusTextEl.textContent =
+        'Waiting for pairing…';
+
+      pollStatus(currentId);
+    }
+
+    resultEl.scrollIntoView({
+      behavior: 'smooth',
+      block: 'nearest'
+    });
+
+  } catch (err) {
+
+    errEl.textContent =
+      err.message || 'Something went wrong.';
+
+  } finally {
+
+    btn.disabled = false;
+
+    btnContent.innerHTML = `
+      <span>Get pairing code</span>
+      <span>→</span>
+    `;
+  }
+
+});
+</script></body>
+</html>

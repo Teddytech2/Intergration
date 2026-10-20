@@ -1,0 +1,1767 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#08090d">
+  <meta name="color-scheme" content="dark">  <title>TEDDY-XMD — Pair Device</title>  <link rel="icon" href="https://files.catbox.moe/byjwa1.jpg">  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+    :root {
+      --bg: #07080c;
+      --card: rgba(17, 19, 28, .76);
+      --card2: rgba(255,255,255,.035);
+      --border: rgba(255,255,255,.09);
+
+      --text: #f7f7fb;
+      --muted: #9297a9;
+
+      --purple: #a855f7;
+      --pink: #ec4899;
+      --blue: #6366f1;
+
+      --green: #22c55e;
+      --yellow: #facc15;
+      --red: #ef4444;
+
+      --shadow: rgba(0,0,0,.5);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      padding: 28px 16px;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      color: var(--text);
+
+      font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+      background:
+        radial-gradient(
+          700px 400px at 10% -10%,
+          rgba(168,85,247,.23),
+          transparent 65%
+        ),
+        radial-gradient(
+          650px 400px at 100% 5%,
+          rgba(236,72,153,.18),
+          transparent 65%
+        ),
+        radial-gradient(
+          600px 400px at 50% 110%,
+          rgba(99,102,241,.12),
+          transparent 65%
+        ),
+        var(--bg);
+
+      overflow-x: hidden;
+    }
+
+    /* Ambient background */
+
+    .orb {
+      position: fixed;
+      width: 260px;
+      height: 260px;
+      border-radius: 50%;
+
+      filter: blur(100px);
+      opacity: .12;
+
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .orb.one {
+      background: var(--purple);
+      top: -130px;
+      left: -120px;
+    }
+
+    .orb.two {
+      background: var(--pink);
+      right: -130px;
+      bottom: -120px;
+    }
+
+    .wrapper {
+      width: 100%;
+      max-width: 450px;
+    }
+
+    /* Brand */
+
+    .brand {
+      text-align: center;
+      margin-bottom: 22px;
+
+      animation: fadeDown .55s ease;
+    }
+
+    .logo {
+      width: 76px;
+      height: 76px;
+
+      margin: 0 auto 13px;
+
+      border-radius: 22px;
+
+      object-fit: cover;
+
+      border: 1px solid rgba(255,255,255,.14);
+
+      box-shadow:
+        0 15px 45px rgba(168,85,247,.25),
+        0 0 35px rgba(236,72,153,.10);
+
+      background: #15151f;
+    }
+
+    .brand h1 {
+      font-size: 1.45rem;
+      font-weight: 800;
+      letter-spacing: -.045em;
+    }
+
+    .brand h1 span {
+      background:
+        linear-gradient(
+          90deg,
+          #c084fc,
+          #f472b6,
+          #a78bfa
+        );
+
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .brand p {
+      margin-top: 6px;
+
+      color: var(--muted);
+      font-size: .76rem;
+    }
+
+    /* Main card */
+
+    .card {
+      padding: 24px;
+
+      background: var(--card);
+
+      border: 1px solid var(--border);
+      border-radius: 24px;
+
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+
+      box-shadow:
+        0 30px 90px var(--shadow),
+        inset 0 1px rgba(255,255,255,.035);
+
+      animation: fadeUp .55s ease;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      margin-bottom: 22px;
+    }
+
+    .title {
+      font-size: .92rem;
+      font-weight: 700;
+    }
+
+    .secure {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+
+      padding: 6px 9px;
+
+      border-radius: 999px;
+
+      background: rgba(34,197,94,.07);
+      border: 1px solid rgba(34,197,94,.14);
+
+      color: #8ee4a8;
+
+      font-size: .63rem;
+      font-weight: 600;
+    }
+
+    .secure-dot {
+      width: 6px;
+      height: 6px;
+
+      border-radius: 50%;
+
+      background: var(--green);
+
+      box-shadow: 0 0 9px rgba(34,197,94,.7);
+    }
+
+    /* Form */
+
+    .field {
+      margin-bottom: 14px;
+    }
+
+    label {
+      display: block;
+
+      margin-bottom: 8px;
+
+      color: #b8bccb;
+
+      font-size: .72rem;
+      font-weight: 600;
+    }
+
+    .input-wrap {
+      position: relative;
+    }
+
+    .input-icon {
+      position: absolute;
+
+      left: 14px;
+      top: 50%;
+
+      transform: translateY(-50%);
+
+      opacity: .65;
+
+      font-size: 16px;
+    }
+
+    input {
+      width: 100%;
+      height: 53px;
+
+      padding: 0 14px 0 43px;
+
+      color: var(--text);
+      background: rgba(255,255,255,.035);
+
+      border: 1px solid var(--border);
+      border-radius: 14px;
+
+      outline: none;
+
+      font-family: inherit;
+      font-size: .9rem;
+
+      transition:
+        .2s border,
+        .2s box-shadow,
+        .2s background;
+    }
+
+    input::placeholder {
+      color: #626675;
+    }
+
+    input:focus {
+      background: rgba(168,85,247,.045);
+
+      border-color: rgba(168,85,247,.7);
+
+      box-shadow:
+        0 0 0 4px rgba(168,85,247,.08);
+    }
+
+    .hint {
+      margin-top: 7px;
+
+      color: #686d7d;
+
+      font-size: .66rem;
+      line-height: 1.5;
+    }
+
+    /* Buttons */
+
+    button {
+      font-family: inherit;
+
+      cursor: pointer;
+
+      transition:
+        transform .2s ease,
+        opacity .2s ease,
+        box-shadow .2s ease,
+        background .2s ease;
+    }
+
+    button:disabled {
+      opacity: .5;
+      cursor: not-allowed;
+    }
+
+    .primary {
+      width: 100%;
+      height: 52px;
+
+      margin-top: 9px;
+
+      border: 0;
+      border-radius: 14px;
+
+      color: white;
+
+      background:
+        linear-gradient(
+          135deg,
+          var(--purple),
+          var(--pink)
+        );
+
+      font-size: .84rem;
+      font-weight: 700;
+
+      box-shadow:
+        0 12px 30px rgba(168,85,247,.2);
+    }
+
+    .primary:hover:not(:disabled) {
+      transform: translateY(-1px);
+
+      box-shadow:
+        0 16px 35px rgba(168,85,247,.3);
+    }
+
+    .primary:active:not(:disabled) {
+      transform: translateY(0);
+    }
+
+    .btn-content {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Loading */
+
+    .spinner {
+      width: 15px;
+      height: 15px;
+
+      border: 2px solid rgba(255,255,255,.35);
+      border-top-color: white;
+
+      border-radius: 50%;
+
+      animation: spin .7s linear infinite;
+    }
+
+    /* Error */
+
+    .error {
+      display: none;
+
+      margin-top: 11px;
+      padding: 10px 12px;
+
+      border-radius: 12px;
+
+      background: rgba(239,68,68,.07);
+      border: 1px solid rgba(239,68,68,.15);
+
+      color: #ff8585;
+
+      font-size: .7rem;
+      line-height: 1.5;
+      text-align: center;
+    }
+
+    /* Result */
+
+    .result {
+      display: none;
+
+      margin-top: 22px;
+      padding-top: 22px;
+
+      border-top: 1px solid var(--border);
+
+      text-align: center;
+
+      animation: fadeUp .35s ease;
+    }
+
+    .result-title {
+      font-size: .9rem;
+      font-weight: 700;
+    }
+
+    .result-description {
+      margin-top: 6px;
+
+      color: var(--muted);
+
+      font-size: .68rem;
+      line-height: 1.5;
+    }
+
+    /* Server */
+
+    .server {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+
+      margin-top: 15px;
+      margin-bottom: 9px;
+
+      padding: 6px 10px;
+
+      border-radius: 999px;
+
+      color: #a9adbc;
+
+      background: rgba(255,255,255,.035);
+      border: 1px solid var(--border);
+
+      font-size: .62rem;
+    }
+
+    .server-dot {
+      width: 6px;
+      height: 6px;
+
+      border-radius: 50%;
+
+      background: var(--green);
+
+      box-shadow: 0 0 8px rgba(34,197,94,.6);
+    }
+
+    /* Pair code */
+
+    .code-box {
+      padding: 18px 12px;
+
+      border-radius: 17px;
+
+      background:
+        linear-gradient(
+          135deg,
+          rgba(168,85,247,.08),
+          rgba(236,72,153,.045)
+        );
+
+      border: 1px dashed rgba(168,85,247,.55);
+    }
+
+    .code {
+      color: #fff;
+
+      font-family:
+        "SFMono-Regular",
+        Consolas,
+        "Courier New",
+        monospace;
+
+      font-size: 1.65rem;
+      font-weight: 800;
+
+      letter-spacing: .13em;
+
+      word-break: break-word;
+    }
+
+    /* Action buttons */
+
+    .actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+
+      gap: 8px;
+
+      margin-top: 10px;
+    }
+
+    .action {
+      height: 42px;
+
+      border-radius: 12px;
+
+      background: rgba(255,255,255,.035);
+
+      border: 1px solid var(--border);
+
+      color: #e7e8ee;
+
+      font-size: .69rem;
+      font-weight: 600;
+    }
+
+    .action:hover:not(:disabled) {
+      background: rgba(255,255,255,.07);
+      border-color: rgba(168,85,247,.45);
+    }
+
+    /* Status */
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+
+      margin-top: 15px;
+
+      padding: 7px 11px;
+
+      border-radius: 999px;
+
+      background: rgba(250,204,21,.06);
+      border: 1px solid rgba(250,204,21,.13);
+
+      color: #d8c66d;
+
+      font-size: .65rem;
+    }
+
+    .status.connected {
+      color: #8fe3a7;
+
+      background: rgba(34,197,94,.06);
+      border-color: rgba(34,197,94,.14);
+    }
+
+    .status.error {
+      color: #ff8a8a;
+
+      background: rgba(239,68,68,.06);
+      border-color: rgba(239,68,68,.14);
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+
+      border-radius: 50%;
+
+      background: var(--yellow);
+
+      box-shadow: 0 0 8px rgba(250,204,21,.55);
+    }
+
+    .status.connected .status-dot {
+      background: var(--green);
+      box-shadow: 0 0 8px rgba(34,197,94,.6);
+    }
+
+    .status.error .status-dot {
+      background: var(--red);
+      box-shadow: 0 0 8px rgba(239,68,68,.6);
+    }
+
+    /* Instructions */
+
+    .steps {
+      margin-top: 17px;
+      padding: 15px;
+
+      text-align: left;
+
+      background: rgba(255,255,255,.025);
+
+      border: 1px solid var(--border);
+      border-radius: 14px;
+
+      color: #858a9a;
+
+      font-size: .67rem;
+      line-height: 1.8;
+    }
+
+    .steps strong {
+      color: #d7d9e1;
+    }
+
+    /* Feature cards */
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+
+      gap: 7px;
+
+      margin-top: 17px;
+    }
+
+    .feature {
+      padding: 10px 5px;
+
+      text-align: center;
+
+      border: 1px solid var(--border);
+      border-radius: 12px;
+
+      background: rgba(255,255,255,.022);
+
+      color: #777c8d;
+
+      font-size: .58rem;
+    }
+
+    .feature strong {
+      display: block;
+
+      margin-bottom: 3px;
+
+      color: #d9dbe4;
+
+      font-size: .64rem;
+    }
+
+    /* Stats */
+
+    .stats {
+      margin-top: 16px;
+
+      text-align: center;
+
+      color: #6e7382;
+
+      font-size: .62rem;
+    }
+
+    /* Footer */
+
+    footer {
+      margin-top: 18px;
+
+      text-align: center;
+
+      color: #666b7a;
+
+      font-size: .63rem;
+      line-height: 1.7;
+    }
+
+    footer strong {
+      color: #b477f5;
+    }
+
+    footer a {
+      color: #858a9a;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      color: #c084fc;
+    }
+
+    /* Animations */
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(14px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Mobile */
+
+    @media (max-width: 480px) {
+
+      body {
+        padding: 22px 13px;
+        align-items: flex-start;
+        padding-top: 38px;
+      }
+
+      .card {
+        padding: 20px;
+        border-radius: 21px;
+      }
+
+      .logo {
+        width: 70px;
+        height: 70px;
+      }
+
+      .brand h1 {
+        font-size: 1.25rem;
+      }
+
+      .code {
+        font-size: 1.4rem;
+      }
+
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+  </style></head><body>  <div class="orb one"></div>
+  <div class="orb two"></div>  <main class="wrapper"><!-- BRAND -->
+
+<header class="brand">
+
+  <img
+    class="logo"
+    src="https://files.catbox.moe/byjwa1.jpg"
+    alt="TEDDY-XMD"
+  >
+
+  <h1>
+    TEDDY<span>-XMD</span>
+  </h1>
+
+  <p>
+    Secure WhatsApp multi-session pairing
+  </p>
+
+</header>
+
+
+<!-- MAIN -->
+
+<section class="card">
+
+  <div class="topbar">
+
+    <div class="title">
+      Pair your WhatsApp
+    </div>
+
+    <div class="secure">
+      <span class="secure-dot"></span>
+      Secure
+    </div>
+
+  </div>
+
+
+  <!-- FORM -->
+
+  <div id="formCard">
+
+    <div class="field">
+
+      <label for="phone">
+        WhatsApp phone number
+      </label>
+
+      <div class="input-wrap">
+
+        <span class="input-icon">
+          📱
+        </span>
+
+        <input
+          id="phone"
+          type="tel"
+          inputmode="numeric"
+          autocomplete="tel"
+          placeholder="254712345678"
+          maxlength="15"
+        >
+
+      </div>
+
+      <div class="hint">
+        Enter your number with country code. Do not include + or spaces.
+      </div>
+
+    </div>
+
+
+    <button
+      class="primary"
+      id="goBtn"
+      type="button"
+    >
+
+      <span
+        class="btn-content"
+        id="btnContent"
+      >
+        <span>Get pairing code</span>
+        <span>→</span>
+      </span>
+
+    </button>
+
+
+    <div
+      class="error"
+      id="errBox"
+    ></div>
+
+  </div>
+
+
+  <!-- RESULT -->
+
+  <div
+    class="result"
+    id="resultCard"
+  >
+
+    <div class="result-title">
+      Your pairing code
+    </div>
+
+    <div class="result-description">
+      Open WhatsApp → Linked devices →
+      Link with phone number.
+    </div>
+
+
+    <div
+      class="server"
+      id="serverTag"
+    >
+      <span class="server-dot"></span>
+      <span id="serverText">Server</span>
+    </div>
+
+
+    <div class="code-box">
+
+      <div
+        class="code"
+        id="codeText"
+      >
+        ----
+      </div>
+
+    </div>
+
+
+    <div class="actions">
+
+      <button
+        class="action"
+        id="copyBtn"
+        type="button"
+      >
+        📋 Copy code
+      </button>
+
+      <button
+        class="action"
+        id="regenBtn"
+        type="button"
+      >
+        ↻ Regenerate
+      </button>
+
+    </div>
+
+
+    <div
+      class="status"
+      id="status"
+    >
+
+      <span
+        class="status-dot"
+        id="statusDot"
+      ></span>
+
+      <span id="statusText">
+        Checking status…
+      </span>
+
+    </div>
+
+
+    <div class="steps">
+
+      <strong>How to link:</strong><br>
+
+      1. Open WhatsApp on the phone you're linking<br>
+      2. Go to <strong>Settings → Linked Devices</strong><br>
+      3. Select <strong>Link a Device</strong><br>
+      4. Choose <strong>Link with phone number instead</strong><br>
+      5. Enter the pairing code above
+
+    </div>
+
+  </div>
+
+
+  <!-- FEATURES -->
+
+  <div class="features">
+
+    <div class="feature">
+      <strong>⚡ Fast</strong>
+      Quick pairing
+    </div>
+
+    <div class="feature">
+      <strong>🔐 Secure</strong>
+      Protected
+    </div>
+
+    <div class="feature">
+      <strong>🌐 Multi</strong>
+      Multi-server
+    </div>
+
+  </div>
+
+
+  <div
+    class="stats"
+    id="stats"
+  >
+    Checking active sessions…
+  </div>
+
+</section>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+  <div>
+    Powered by <strong>Teddy Tech</strong>
+  </div>
+
+  <div>
+    <a href="/health">
+      System status
+    </a>
+  </div>
+
+</footer>
+
+  </main><script>
+
+/* ==========================================
+   SERVER CONFIGURATION
+========================================== */
+
+const SERVERS = [
+  'https://serveur2-67ef94084519.herokuapp.com',
+  'https://sioask1-d43b373bb9fc.herokuapp.com'
+];
+
+
+/* ==========================================
+   STORAGE
+========================================== */
+
+const LS_KEY = 'teddy_xmd_pairing_state';
+const RR_KEY = 'teddy_xmd_rr_index';
+
+
+function nextServerIndex() {
+
+  const saved =
+    parseInt(
+      localStorage.getItem(RR_KEY) || '0',
+      10
+    );
+
+  const index =
+    Number.isFinite(saved)
+      ? saved % SERVERS.length
+      : 0;
+
+  localStorage.setItem(
+    RR_KEY,
+    String((index + 1) % SERVERS.length)
+  );
+
+  return index;
+}
+
+
+function loadState() {
+
+  try {
+    return JSON.parse(
+      localStorage.getItem(LS_KEY) || 'null'
+    );
+
+  } catch {
+
+    return null;
+
+  }
+}
+
+
+function saveState(state) {
+
+  localStorage.setItem(
+    LS_KEY,
+    JSON.stringify(state)
+  );
+
+}
+
+
+/* ==========================================
+   DOM
+========================================== */
+
+const $ = id =>
+  document.getElementById(id);
+
+
+const phoneInput =
+  $('phone');
+
+const goBtn =
+  $('goBtn');
+
+const btnContent =
+  $('btnContent');
+
+const errBox =
+  $('errBox');
+
+const formCard =
+  $('formCard');
+
+const resultCard =
+  $('resultCard');
+
+const codeText =
+  $('codeText');
+
+const serverText =
+  $('serverText');
+
+const copyBtn =
+  $('copyBtn');
+
+const regenBtn =
+  $('regenBtn');
+
+const status =
+  $('status');
+
+const statusDot =
+  $('statusDot');
+
+const statusText =
+  $('statusText');
+
+const stats =
+  $('stats');
+
+
+let pollTimer = null;
+
+
+/* ==========================================
+   HELPERS
+========================================== */
+
+function shortServer(url) {
+
+  try {
+
+    return new URL(url).hostname;
+
+  } catch {
+
+    return url;
+
+  }
+
+}
+
+
+function showError(message) {
+
+  errBox.textContent = message;
+  errBox.style.display = 'block';
+
+}
+
+
+function clearError() {
+
+  errBox.textContent = '';
+  errBox.style.display = 'none';
+
+}
+
+
+function setLoading(button, loading, label) {
+
+  button.disabled = loading;
+
+  if (loading) {
+
+    button.innerHTML = `
+      <span class="btn-content">
+        <span class="spinner"></span>
+        <span>${label}</span>
+      </span>
+    `;
+
+  } else {
+
+    button.innerHTML = label;
+
+  }
+
+}
+
+
+/* ==========================================
+   PAIR API
+========================================== */
+
+async function callPair(
+  server,
+  phone,
+  regenerate = false
+) {
+
+  const response =
+    await fetch(
+      server + '/api/pair',
+      {
+        method: 'POST',
+
+        headers: {
+          'Content-Type': 'application/json'
+        },
+
+        body: JSON.stringify({
+          phone,
+          regenerate: !!regenerate
+        }),
+
+        cache: 'no-store'
+      }
+    );
+
+
+  const data =
+    await response
+      .json()
+      .catch(() => null);
+
+
+  if (
+    !response.ok ||
+    !data ||
+    data.ok === false
+  ) {
+
+    throw new Error(
+      data?.error ||
+      `HTTP ${response.status}`
+    );
+
+  }
+
+
+  return data;
+
+}
+
+
+/* ==========================================
+   STATUS
+========================================== */
+
+function setStatus(type, text) {
+
+  status.className =
+    'status ' +
+    (type === 'connected'
+      ? 'connected'
+      : type === 'error'
+        ? 'error'
+        : '');
+
+  statusDot.className =
+    'status-dot';
+
+  statusText.textContent =
+    text;
+
+}
+
+
+async function pollStatus() {
+
+  const state =
+    loadState();
+
+  if (!state) return;
+
+
+  try {
+
+    const response =
+      await fetch(
+        state.server +
+        '/api/status/' +
+        encodeURIComponent(
+          state.sessionId
+        ),
+        {
+          cache: 'no-store'
+        }
+      );
+
+
+    const data =
+      await response.json();
+
+
+    const labels = {
+
+      starting:
+        'Starting session…',
+
+      pairing:
+        'Waiting for you to enter the code…',
+
+      connected:
+        'Connected ✓',
+
+      stopped:
+        'Session stopped',
+
+      none:
+        'Session not found',
+
+      removing:
+        'Removing session…'
+
+    };
+
+
+    if (data.status === 'connected') {
+
+      setStatus(
+        'connected',
+        data.pluginCount
+          ? `Connected ✓ · ${data.pluginCount} plugins`
+          : 'Connected ✓'
+      );
+
+      clearInterval(pollTimer);
+
+    }
+
+    else if (
+      data.status === 'stopped' ||
+      data.status === 'none'
+    ) {
+
+      setStatus(
+        'error',
+        labels[data.status] || 'Session unavailable'
+      );
+
+      clearInterval(pollTimer);
+
+    }
+
+    else {
+
+      setStatus(
+        'waiting',
+        labels[data.status] ||
+        'Checking session…'
+      );
+
+    }
+
+  } catch {
+
+    setStatus(
+      'error',
+      'Server temporarily unreachable'
+    );
+
+  }
+
+}
+
+
+/* ==========================================
+   RENDER RESULT
+========================================== */
+
+function renderResult(
+  server,
+  phone,
+  sessionId,
+  pairingCode,
+  alreadyLinked
+) {
+
+  saveState({
+    server,
+    phone,
+    sessionId
+  });
+
+
+  formCard.style.display =
+    'none';
+
+  resultCard.style.display =
+    'block';
+
+
+  serverText.textContent =
+    shortServer(server);
+
+
+  if (alreadyLinked) {
+
+    codeText.textContent =
+      'ALREADY LINKED';
+
+    copyBtn.style.display =
+      'none';
+
+    setStatus(
+      'connected',
+      'Already connected ✓'
+    );
+
+  } else {
+
+    codeText.textContent =
+      pairingCode || '----';
+
+    copyBtn.style.display =
+      'block';
+
+    setStatus(
+      'waiting',
+      'Waiting for you to enter the code…'
+    );
+
+  }
+
+
+  clearInterval(pollTimer);
+
+  pollTimer =
+    setInterval(
+      pollStatus,
+      3000
+    );
+
+  pollStatus();
+
+
+  resultCard.scrollIntoView({
+    behavior: 'smooth',
+    block: 'nearest'
+  });
+
+}
+
+
+/* ==========================================
+   GET PAIRING CODE
+========================================== */
+
+async function startPairing() {
+
+  clearError();
+
+  const phone =
+    phoneInput.value
+      .replace(/\D/g, '')
+      .trim();
+
+
+  if (phone.length < 10) {
+
+    showError(
+      'Enter a valid phone number with country code.'
+    );
+
+    phoneInput.focus();
+
+    return;
+
+  }
+
+
+  setLoading(
+    goBtn,
+    true,
+    'Requesting…'
+  );
+
+
+  const server =
+    SERVERS[nextServerIndex()];
+
+
+  try {
+
+    const data =
+      await callPair(
+        server,
+        phone,
+        false
+      );
+
+
+    renderResult(
+      server,
+      phone,
+      data.sessionId,
+      data.pairingCode,
+      data.alreadyLinked
+    );
+
+
+  } catch (error) {
+
+    showError(
+      `Could not reach ${shortServer(server)}: ${error.message}`
+    );
+
+  } finally {
+
+    goBtn.disabled =
+      false;
+
+    btnContent.innerHTML = `
+      <span>Get pairing code</span>
+      <span>→</span>
+    `;
+
+  }
+
+}
+
+
+/* ==========================================
+   BUTTON
+========================================== */
+
+goBtn.addEventListener(
+  'click',
+  startPairing
+);
+
+
+/* Enter key */
+
+phoneInput.addEventListener(
+  'keydown',
+  event => {
+
+    if (event.key === 'Enter') {
+
+      event.preventDefault();
+
+      startPairing();
+
+    }
+
+  }
+);
+
+
+/* Numbers only */
+
+phoneInput.addEventListener(
+  'input',
+  () => {
+
+    phoneInput.value =
+      phoneInput.value.replace(
+        /\D/g,
+        ''
+      );
+
+  }
+);
+
+
+/* ==========================================
+   COPY
+========================================== */
+
+copyBtn.addEventListener(
+  'click',
+  async () => {
+
+    const code =
+      codeText.textContent.trim();
+
+
+    if (
+      !code ||
+      code === '----' ||
+      code === 'ALREADY LINKED'
+    ) {
+
+      return;
+
+    }
+
+
+    try {
+
+      await navigator.clipboard.writeText(
+        code
+      );
+
+      copyBtn.textContent =
+        '✓ Copied';
+
+      setTimeout(
+        () => {
+
+          copyBtn.textContent =
+            '📋 Copy code';
+
+        },
+        1600
+      );
+
+    } catch {
+
+      showError(
+        'Unable to copy the pairing code.'
+      );
+
+    }
+
+  }
+);
+
+
+/* ==========================================
+   REGENERATE
+========================================== */
+
+regenBtn.addEventListener(
+  'click',
+  async () => {
+
+    clearError();
+
+
+    const state =
+      loadState();
+
+
+    if (!state) {
+
+      showError(
+        'No active pairing session found.'
+      );
+
+      return;
+
+    }
+
+
+    setLoading(
+      regenBtn,
+      true,
+      'Regenerating…'
+    );
+
+
+    try {
+
+      const data =
+        await callPair(
+          state.server,
+          state.phone,
+          true
+        );
+
+
+      renderResult(
+        state.server,
+        state.phone,
+        data.sessionId,
+        data.pairingCode,
+        data.alreadyLinked
+      );
+
+
+    } catch (error) {
+
+      showError(
+        'Regenerate failed: ' +
+        error.message
+      );
+
+    } finally {
+
+      regenBtn.disabled =
+        false;
+
+      regenBtn.innerHTML =
+        '↻ Regenerate';
+
+    }
+
+  }
+);
+
+
+/* ==========================================
+   STATS
+========================================== */
+
+async function loadStats() {
+
+  try {
+
+    const response =
+      await fetch(
+        '/api/stats',
+        {
+          cache: 'no-store'
+        }
+      );
+
+
+    const data =
+      await response.json();
+
+
+    stats.textContent =
+      `${data.active || 0} connected · ${data.total || 0} total session(s)`;
+
+  } catch {
+
+    stats.textContent =
+      'Session statistics unavailable';
+
+  }
+
+}
+
+
+loadStats();
+
+setInterval(
+  loadStats,
+  15000
+);
+
+
+/* ==========================================
+   RESUME SESSION
+========================================== */
+
+(function init() {
+
+  const state =
+    loadState();
+
+
+  if (!state) {
+
+    return;
+
+  }
+
+
+  formCard.style.display =
+    'none';
+
+  resultCard.style.display =
+    'block';
+
+
+  serverText.textContent =
+    shortServer(state.server);
+
+
+  codeText.textContent =
+    '••••';
+
+
+  setStatus(
+    'waiting',
+    'Restoring pairing session…'
+  );
+
+
+  clearInterval(pollTimer);
+
+  pollTimer =
+    setInterval(
+      pollStatus,
+      3000
+    );
+
+
+  pollStatus();
+
+})();
+
+</script></body>
+</html>

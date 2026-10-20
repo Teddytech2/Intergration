@@ -1,0 +1,1996 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>TEDDY-XMD — Link Your WhatsApp</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#050505">
+<meta name="description" content="TEDDY-XMD WhatsApp Bot pairing page — Powered by Teddy Tech">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#050505;
+  --bg2:#0a0a0a;
+  --card:rgba(255,255,255,.045);
+  --card2:rgba(255,255,255,.025);
+  --border:rgba(255,255,255,.1);
+  --purple:#8b5cf6;
+  --purple2:#6d28d9;
+  --pink:#ec4899;
+  --cyan:#22d3ee;
+  --white:#fff;
+  --muted:#999;
+  --green:#4ade80;
+  --red:#fb7185;
+}
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  min-height:100vh;
+  background:
+    radial-gradient(circle at 15% 0%,rgba(139,92,246,.2),transparent 35%),
+    radial-gradient(circle at 90% 20%,rgba(236,72,153,.13),transparent 30%),
+    linear-gradient(180deg,#050505,#080808 55%,#050505);
+  color:var(--white);
+  font-family:Inter,Arial,sans-serif;
+  overflow-x:hidden;
+}
+
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  opacity:.25;
+  background-image:
+    linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+  background-size:45px 45px;
+}
+
+button,
+input{
+  font-family:inherit;
+}
+
+a{
+  color:inherit;
+}
+
+/* TOP BAR */
+
+.topbar{
+  position:relative;
+  z-index:10;
+  width:100%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:18px 22px;
+  border-bottom:1px solid rgba(255,255,255,.07);
+  backdrop-filter:blur(18px);
+  background:rgba(5,5,5,.7);
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.brand-mark{
+  width:46px;
+  height:46px;
+  border-radius:15px;
+  object-fit:cover;
+  border:1px solid rgba(139,92,246,.8);
+  box-shadow:
+    0 0 25px rgba(139,92,246,.35),
+    0 0 50px rgba(236,72,153,.1);
+}
+
+.brand-title{
+  font-size:1.15rem;
+  font-weight:900;
+  letter-spacing:.04em;
+}
+
+.brand-title .accent{
+  background:linear-gradient(90deg,var(--purple),var(--pink));
+  -webkit-background-clip:text;
+  color:transparent;
+}
+
+.brand-sub{
+  margin-top:3px;
+  color:#777;
+  font-size:.62rem;
+  text-transform:uppercase;
+  letter-spacing:.25em;
+}
+
+.stats-pill{
+  display:inline-block;
+  margin-left:8px;
+  padding:3px 8px;
+  border-radius:999px;
+  font-family:"Space Mono",monospace;
+  font-size:.6rem;
+  color:#c4b5fd;
+  background:rgba(139,92,246,.1);
+  border:1px solid rgba(139,92,246,.25);
+}
+
+.menu-btn{
+  width:42px;
+  height:42px;
+  border-radius:12px;
+  border:1px solid var(--border);
+  background:rgba(255,255,255,.04);
+  color:white;
+  cursor:pointer;
+  font-size:20px;
+  margin:0;
+  box-shadow:none;
+}
+
+.menu-btn:hover{
+  background:rgba(139,92,246,.15);
+  border-color:rgba(139,92,246,.5);
+}
+
+.menu-wrap{
+  position:relative;
+}
+
+.menu{
+  position:absolute;
+  right:0;
+  top:52px;
+  width:190px;
+  display:none;
+  padding:7px;
+  border:1px solid rgba(139,92,246,.3);
+  border-radius:15px;
+  background:#101010;
+  box-shadow:0 20px 60px rgba(0,0,0,.6);
+}
+
+.menu.open{
+  display:block;
+}
+
+.menu a{
+  display:block;
+  padding:11px;
+  border-radius:10px;
+  color:#ddd;
+  text-decoration:none;
+  font-size:.84rem;
+}
+
+.menu a:hover{
+  background:rgba(139,92,246,.12);
+  color:white;
+}
+
+/* HERO */
+
+.hero{
+  position:relative;
+  z-index:1;
+  text-align:center;
+  padding:42px 20px 25px;
+}
+
+.hero-logo{
+  width:125px;
+  height:125px;
+  object-fit:cover;
+  border-radius:35px;
+  border:2px solid rgba(139,92,246,.7);
+  box-shadow:
+    0 0 35px rgba(139,92,246,.35),
+    0 0 80px rgba(236,72,153,.12);
+}
+
+.hero h1{
+  margin-top:22px;
+  font-size:clamp(2rem,8vw,3.2rem);
+  line-height:1;
+  font-weight:900;
+  letter-spacing:-.06em;
+}
+
+.hero h1 span{
+  background:linear-gradient(90deg,#a78bfa,#ec4899);
+  -webkit-background-clip:text;
+  color:transparent;
+}
+
+.hero p{
+  max-width:560px;
+  margin:15px auto 0;
+  color:#888;
+  font-size:.92rem;
+  line-height:1.6;
+}
+
+.badge{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  margin-top:17px;
+  padding:8px 13px;
+  border:1px solid rgba(74,222,128,.2);
+  border-radius:999px;
+  background:rgba(74,222,128,.06);
+  color:#86efac;
+  font-size:.72rem;
+  font-weight:700;
+}
+
+.dot{
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:var(--green);
+  box-shadow:0 0 12px var(--green);
+}
+
+/* CONTAINER */
+
+.wrap{
+  position:relative;
+  z-index:2;
+  width:min(680px,calc(100% - 28px));
+  margin:auto;
+}
+
+/* NAV */
+
+.nav-tabs{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:7px;
+  margin-bottom:14px;
+}
+
+.nav-tab{
+  padding:12px 8px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,.08);
+  background:rgba(255,255,255,.035);
+  color:#888;
+  cursor:pointer;
+  font-weight:700;
+  font-size:.8rem;
+  box-shadow:none;
+  margin:0;
+}
+
+.nav-tab.active{
+  color:white;
+  border-color:rgba(139,92,246,.5);
+  background:linear-gradient(
+    135deg,
+    rgba(139,92,246,.28),
+    rgba(236,72,153,.13)
+  );
+}
+
+/* CARD */
+
+.card{
+  border:1px solid rgba(139,92,246,.28);
+  border-radius:25px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,.055),
+      rgba(255,255,255,.018)
+    );
+  padding:27px;
+  box-shadow:
+    0 30px 90px rgba(0,0,0,.5),
+    inset 0 1px rgba(255,255,255,.04);
+  backdrop-filter:blur(20px);
+}
+
+.card h2{
+  text-align:center;
+  font-size:1.4rem;
+  font-weight:900;
+}
+
+.card-title{
+  text-align:center;
+  font-size:1.4rem;
+  font-weight:900;
+}
+
+.card-title span{
+  background:linear-gradient(90deg,var(--purple),var(--pink));
+  -webkit-background-clip:text;
+  color:transparent;
+}
+
+.tagline{
+  text-align:center;
+  color:#888;
+  font-size:.86rem;
+  line-height:1.55;
+  margin:9px 0 23px;
+}
+
+/* MODE */
+
+.mode-tabs{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin-bottom:20px;
+}
+
+.mode-tab{
+  margin:0;
+  padding:11px;
+  border-radius:11px;
+  border:1px solid rgba(255,255,255,.08);
+  background:rgba(255,255,255,.03);
+  color:#888;
+  cursor:pointer;
+  font-size:.8rem;
+  font-weight:700;
+  box-shadow:none;
+}
+
+.mode-tab.active{
+  color:white;
+  border-color:rgba(139,92,246,.5);
+  background:rgba(139,92,246,.13);
+}
+
+/* INPUT */
+
+.field-label{
+  display:block;
+  color:#aaa;
+  font-size:.76rem;
+  margin-bottom:7px;
+}
+
+input{
+  width:100%;
+  padding:15px;
+  border-radius:13px;
+  border:1px solid rgba(255,255,255,.1);
+  outline:none;
+  background:rgba(0,0,0,.35);
+  color:white;
+  font-family:"Space Mono",monospace;
+  font-size:.92rem;
+}
+
+input::placeholder{
+  color:#555;
+}
+
+input:focus{
+  border-color:var(--purple);
+  box-shadow:0 0 0 3px rgba(139,92,246,.12);
+}
+
+/* BUTTONS */
+
+button{
+  width:100%;
+  padding:14px;
+  border:0;
+  border-radius:13px;
+  margin-top:12px;
+  cursor:pointer;
+  font-weight:800;
+  color:white;
+  background:linear-gradient(135deg,var(--purple2),var(--pink));
+  box-shadow:0 10px 30px rgba(139,92,246,.2);
+  transition:.2s ease;
+}
+
+button:hover{
+  transform:translateY(-1px);
+  box-shadow:0 14px 35px rgba(139,92,246,.3);
+}
+
+button:active{
+  transform:scale(.98);
+}
+
+button:disabled{
+  opacity:.45;
+  cursor:not-allowed;
+  transform:none;
+  box-shadow:none;
+}
+
+button.secondary{
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.1);
+  box-shadow:none;
+}
+
+button.ghost{
+  background:transparent;
+  border:1px solid rgba(139,92,246,.35);
+  color:#c4b5fd;
+  box-shadow:none;
+}
+
+/* STEPS */
+
+.step{
+  display:none;
+}
+
+.step.active{
+  display:block;
+  animation:fade .3s ease;
+}
+
+@keyframes fade{
+  from{
+    opacity:0;
+    transform:translateY(7px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+.steps{
+  list-style:none;
+  margin:0 0 18px;
+  padding:0;
+}
+
+.steps li{
+  position:relative;
+  color:#888;
+  font-size:.82rem;
+  padding-left:20px;
+  margin:8px 0;
+}
+
+.steps li::before{
+  content:"✓";
+  position:absolute;
+  left:0;
+  color:#a78bfa;
+  font-weight:800;
+}
+
+/* PAIR CODE */
+
+.code-shell{
+  margin:22px 0;
+  text-align:center;
+}
+
+.code{
+  padding:21px 12px;
+  border-radius:17px;
+  border:1px solid rgba(139,92,246,.4);
+  background:rgba(139,92,246,.06);
+  color:#c4b5fd;
+  font-family:"Space Mono",monospace;
+  font-size:2.15rem;
+  font-weight:700;
+  letter-spacing:.28em;
+  text-indent:.28em;
+  box-shadow:0 0 40px rgba(139,92,246,.12);
+}
+
+.waiting{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:9px;
+  margin-top:13px;
+  color:#777;
+  font-size:.78rem;
+}
+
+.spinner{
+  width:15px;
+  height:15px;
+  border-radius:50%;
+  border:2px solid rgba(139,92,246,.2);
+  border-top-color:#a78bfa;
+  animation:spin .8s linear infinite;
+}
+
+@keyframes spin{
+  to{transform:rotate(360deg)}
+}
+
+/* QR */
+
+.qr-shell{
+  text-align:center;
+  margin:20px 0;
+}
+
+.qr-frame{
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:245px;
+  height:245px;
+  margin:auto;
+}
+
+.qr-frame img{
+  width:220px;
+  height:220px;
+  padding:9px;
+  border-radius:15px;
+  background:white;
+}
+
+.qr-corner{
+  position:absolute;
+  width:28px;
+  height:28px;
+  border-color:#a78bfa;
+  border-style:solid;
+}
+
+.tl{
+  top:0;
+  left:0;
+  border-width:3px 0 0 3px;
+  border-radius:8px 0 0 0;
+}
+
+.tr{
+  top:0;
+  right:0;
+  border-width:3px 3px 0 0;
+  border-radius:0 8px 0 0;
+}
+
+.bl{
+  bottom:0;
+  left:0;
+  border-width:0 0 3px 3px;
+  border-radius:0 0 0 8px;
+}
+
+.br{
+  bottom:0;
+  right:0;
+  border-width:0 3px 3px 0;
+  border-radius:0 0 8px 0;
+}
+
+/* SESSION */
+
+textarea{
+  width:100%;
+  height:105px;
+  resize:none;
+  padding:12px;
+  border-radius:13px;
+  border:1px solid rgba(74,222,128,.2);
+  background:rgba(0,0,0,.35);
+  color:#86efac;
+  font-family:"Space Mono",monospace;
+  font-size:.72rem;
+}
+
+.muted{
+  color:#888;
+  font-size:.83rem;
+  line-height:1.6;
+}
+
+.warn{
+  color:#fbbf24;
+  font-size:.74rem;
+  line-height:1.5;
+  margin-top:14px;
+}
+
+.err{
+  min-height:20px;
+  color:var(--red);
+  font-size:.8rem;
+  margin-top:7px;
+}
+
+/* FEATURES */
+
+.feature-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:8px;
+  margin:15px 0;
+}
+
+.feature{
+  text-align:center;
+  padding:14px 5px;
+  border-radius:15px;
+  border:1px solid rgba(255,255,255,.07);
+  background:rgba(255,255,255,.025);
+}
+
+.feature-icon{
+  font-size:1.25rem;
+}
+
+.feature strong{
+  display:block;
+  margin-top:5px;
+  font-size:.7rem;
+}
+
+.feature small{
+  color:#666;
+  font-size:.63rem;
+}
+
+/* COMMANDS */
+
+.command-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:8px;
+  margin-top:17px;
+}
+
+.command{
+  padding:14px;
+  border-radius:13px;
+  border:1px solid rgba(139,92,246,.18);
+  background:rgba(139,92,246,.045);
+  font-size:.8rem;
+  font-weight:700;
+  text-align:center;
+}
+
+/* ABOUT */
+
+.about-box{
+  padding:15px;
+  border-radius:14px;
+  background:rgba(255,255,255,.025);
+  border:1px solid rgba(255,255,255,.07);
+  margin-top:15px;
+}
+
+.about-box p{
+  color:#888;
+  font-size:.8rem;
+  line-height:1.6;
+}
+
+/* FOOTER */
+
+footer{
+  text-align:center;
+  padding:30px 10px 20px;
+  color:#555;
+}
+
+.footer-brand{
+  font-size:.85rem;
+  font-weight:900;
+  color:#aaa;
+  letter-spacing:.08em;
+}
+
+.footer-brand span{
+  color:#a78bfa;
+}
+
+.footer-sub{
+  margin-top:6px;
+  font-size:.67rem;
+  letter-spacing:.15em;
+  text-transform:uppercase;
+}
+
+.footer-links{
+  display:flex;
+  justify-content:center;
+  gap:18px;
+  margin-top:14px;
+}
+
+.footer-links a{
+  color:#777;
+  font-size:.7rem;
+  text-decoration:none;
+}
+
+.footer-links a:hover{
+  color:#c4b5fd;
+}
+
+/* MOBILE */
+
+@media(max-width:520px){
+
+  .topbar{
+    padding:14px;
+  }
+
+  .brand-mark{
+    width:41px;
+    height:41px;
+    border-radius:12px;
+  }
+
+  .brand-title{
+    font-size:.98rem;
+  }
+
+  .stats-pill{
+    display:none;
+  }
+
+  .hero{
+    padding-top:32px;
+  }
+
+  .hero-logo{
+    width:105px;
+    height:105px;
+    border-radius:28px;
+  }
+
+  .hero h1{
+    font-size:2.15rem;
+  }
+
+  .wrap{
+    width:calc(100% - 20px);
+  }
+
+  .card{
+    padding:21px 16px;
+    border-radius:20px;
+  }
+
+  .feature-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .code{
+    font-size:1.65rem;
+    letter-spacing:.18em;
+    text-indent:.18em;
+  }
+
+  .qr-frame{
+    width:230px;
+    height:230px;
+  }
+
+  .qr-frame img{
+    width:205px;
+    height:205px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header class="topbar">
+
+  <div class="brand">
+    <img
+      src="https://files.catbox.moe/byjwa1.jpg"
+      alt="TEDDY-XMD"
+      class="brand-mark"
+    >
+
+    <div>
+      <div class="brand-title">
+        TEDDY <span class="accent">XMD</span>
+        <span class="stats-pill" id="stats-pill">— linked</span>
+      </div>
+
+      <div class="brand-sub">
+        WhatsApp Bot
+      </div>
+    </div>
+  </div>
+
+  <div class="menu-wrap">
+
+    <button
+      class="menu-btn"
+      id="menu-btn"
+      aria-label="Open menu"
+    >☰</button>
+
+    <div class="menu" id="menu">
+
+      <a
+        href="https://github.com/Teddyxmd/TEDDY-XMD"
+        target="_blank"
+        rel="noopener"
+      >
+        📦 GitHub Repo
+      </a>
+
+      <a
+        href="https://whatsapp.com/channel/0029Vb6NveDBPzjPa4vIRt3n"
+        target="_blank"
+        rel="noopener"
+      >
+        📢 WhatsApp Channel
+      </a>
+
+      <a
+        href="https://chat.whatsapp.com/CLClgqJIC59GrcI4sRzLu8"
+        target="_blank"
+        rel="noopener"
+      >
+        👥 WhatsApp Group
+      </a>
+
+      <a href="#" id="menu-about">
+        ℹ️ About TEDDY-XMD
+      </a>
+
+    </div>
+
+  </div>
+
+</header>
+
+
+<section class="hero">
+
+  <img
+    src="https://files.catbox.moe/byjwa1.jpg"
+    alt="TEDDY-XMD"
+    class="hero-logo"
+  >
+
+  <h1>
+    TEDDY <span>XMD</span>
+  </h1>
+
+  <p>
+    Connect your WhatsApp to TEDDY-XMD in seconds.
+    Fast, secure and built for powerful WhatsApp automation.
+  </p>
+
+  <div class="badge">
+    <span class="dot"></span>
+    TEDDY-XMD ONLINE
+  </div>
+
+</section>
+
+
+<main class="wrap">
+
+  <nav class="nav-tabs">
+
+    <button
+      class="nav-tab active"
+      data-page="connect"
+    >
+      🔗 Connect
+    </button>
+
+    <button
+      class="nav-tab"
+      data-page="commands"
+    >
+      ⚡ Features
+    </button>
+
+    <button
+      class="nav-tab"
+      data-page="about"
+    >
+      ℹ️ About
+    </button>
+
+  </nav>
+
+
+  <!-- CONNECT -->
+
+  <section
+    class="card"
+    id="page-connect"
+  >
+
+    <!-- PHONE -->
+
+    <div
+      class="step active"
+      id="step-phone"
+    >
+
+      <div class="card-title">
+        🔗 <span>Connect</span> WhatsApp
+      </div>
+
+      <p class="tagline">
+        Enter your WhatsApp number and generate your
+        secure pairing code.
+      </p>
+
+
+      <div class="mode-tabs">
+
+        <button
+          class="mode-tab active"
+          data-mode="pair"
+        >
+          🔢 Pairing Code
+        </button>
+
+        <button
+          class="mode-tab"
+          data-mode="qr"
+        >
+          ▦ QR Code
+        </button>
+
+      </div>
+
+
+      <div id="pair-fields">
+
+        <label class="field-label">
+          WhatsApp Number
+        </label>
+
+        <input
+          id="phone"
+          type="tel"
+          inputmode="numeric"
+          autocomplete="off"
+          placeholder="e.g. 254712345678"
+        >
+
+        <div
+          id="err-phone"
+          class="err"
+        ></div>
+
+        <button id="btn-request">
+          🚀 Get Pairing Code
+        </button>
+
+      </div>
+
+
+      <div
+        id="qr-fields"
+        style="display:none"
+      >
+
+        <p class="muted">
+          Open WhatsApp → Linked Devices →
+          Link a Device and scan the QR code.
+        </p>
+
+        <button id="btn-request-qr">
+          📷 Generate QR Code
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <!-- QR -->
+
+    <div
+      class="step"
+      id="step-qr"
+    >
+
+      <div class="card-title">
+        📷 Scan <span>QR Code</span>
+      </div>
+
+      <p class="tagline">
+        Use WhatsApp Linked Devices to scan this code.
+      </p>
+
+      <ul class="steps">
+
+        <li>Open WhatsApp</li>
+
+        <li>
+          Go to Linked Devices
+        </li>
+
+        <li>
+          Select Link a Device
+        </li>
+
+        <li>
+          Scan the QR code
+        </li>
+
+      </ul>
+
+
+      <div class="qr-shell">
+
+        <div class="qr-frame">
+
+          <span class="qr-corner tl"></span>
+          <span class="qr-corner tr"></span>
+          <span class="qr-corner bl"></span>
+          <span class="qr-corner br"></span>
+
+          <img
+            id="qr-image"
+            alt="WhatsApp QR Code"
+          >
+
+        </div>
+
+      </div>
+
+      <div class="waiting">
+        <span class="spinner"></span>
+        Waiting for scan...
+      </div>
+
+    </div>
+
+
+    <!-- CODE -->
+
+    <div
+      class="step"
+      id="step-code"
+    >
+
+      <div class="card-title">
+        🔢 Your <span>Pairing Code</span>
+      </div>
+
+      <p class="tagline">
+        Enter this code in WhatsApp to link TEDDY-XMD.
+      </p>
+
+      <ul class="steps">
+
+        <li>Open WhatsApp</li>
+
+        <li>
+          Go to Linked Devices
+        </li>
+
+        <li>
+          Choose "Link with phone number instead"
+        </li>
+
+        <li>
+          Enter the code below
+        </li>
+
+      </ul>
+
+
+      <div class="code-shell">
+
+        <div
+          class="code"
+          id="pair-code"
+        >
+          ----
+        </div>
+
+        <button
+          id="btn-copy-code"
+          class="ghost"
+        >
+          📋 Copy Code
+        </button>
+
+      </div>
+
+
+      <div class="waiting">
+        <span class="spinner"></span>
+        Waiting for WhatsApp...
+      </div>
+
+    </div>
+
+
+    <!-- CONNECTED -->
+
+    <div
+      class="step"
+      id="step-done"
+    >
+
+      <div class="card-title">
+        ✅ <span>Connected!</span>
+      </div>
+
+      <p class="tagline">
+        Your WhatsApp account has been successfully
+        linked to TEDDY-XMD.
+      </p>
+
+      <p class="muted">
+        Copy the session ID and place it inside your
+        bot's <code>SESSION_ID</code> environment variable.
+      </p>
+
+
+      <textarea
+        id="session-out"
+        readonly
+      ></textarea>
+
+
+      <button id="btn-copy">
+        📋 Copy Session ID
+      </button>
+
+
+      <a
+        id="repo-link"
+        href="#"
+        target="_blank"
+        rel="noopener"
+        style="
+          display:block;
+          text-align:center;
+          margin-top:14px;
+          color:#a78bfa;
+          font-size:.75rem;
+          text-decoration:none;
+        "
+      ></a>
+
+
+      <p class="warn">
+        ⚠️ Keep your session ID private.
+        Anyone with it may be able to access your
+        WhatsApp session.
+      </p>
+
+    </div>
+
+
+    <!-- ERROR -->
+
+    <div
+      class="step"
+      id="step-error"
+    >
+
+      <div class="card-title">
+        ⚠️ <span>Connection Error</span>
+      </div>
+
+      <p
+        id="err-msg"
+        class="err"
+        style="text-align:center;margin-top:15px"
+      ></p>
+
+      <button
+        id="btn-retry"
+        class="secondary"
+      >
+        🔄 Try Again
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <!-- FEATURES -->
+
+  <div class="feature-grid">
+
+    <div class="feature">
+      <div class="feature-icon">⚡</div>
+      <strong>FAST</strong>
+      <small>Pairing</small>
+    </div>
+
+    <div class="feature">
+      <div class="feature-icon">🛡️</div>
+      <strong>SECURE</strong>
+      <small>Sessions</small>
+    </div>
+
+    <div class="feature">
+      <div class="feature-icon">🤖</div>
+      <strong>SMART</strong>
+      <small>Bot</small>
+    </div>
+
+    <div class="feature">
+      <div class="feature-icon">🌐</div>
+      <strong>24/7</strong>
+      <small>Online</small>
+    </div>
+
+  </div>
+
+
+  <!-- COMMANDS -->
+
+  <section
+    class="card"
+    id="page-commands"
+    style="display:none"
+  >
+
+    <div class="card-title">
+      ⚡ TEDDY-XMD <span>Features</span>
+    </div>
+
+    <p class="tagline">
+      Powerful tools for groups, media, automation,
+      AI and everyday WhatsApp use.
+    </p>
+
+
+    <div class="command-grid">
+
+      <div class="command">
+        👥 Group Management
+      </div>
+
+      <div class="command">
+        🛡️ Group Protection
+      </div>
+
+      <div class="command">
+        🎵 Media Downloader
+      </div>
+
+      <div class="command">
+        🤖 AI Tools
+      </div>
+
+      <div class="command">
+        🎨 Stickers
+      </div>
+
+      <div class="command">
+        🧰 Utilities
+      </div>
+
+      <div class="command">
+        🎮 Fun & Games
+      </div>
+
+      <div class="command">
+        👑 Owner Tools
+      </div>
+
+    </div>
+
+
+    <div class="about-box">
+
+      <p>
+        Manage groups, download media, use AI commands,
+        create stickers, automate tasks and much more
+        with TEDDY-XMD.
+      </p>
+
+    </div>
+
+  </section>
+
+
+  <!-- ABOUT -->
+
+  <section
+    class="card"
+    id="page-about"
+    style="display:none"
+  >
+
+    <div class="card-title">
+      🧸 About <span>TEDDY-XMD</span>
+    </div>
+
+    <p class="tagline">
+      A powerful multi-device WhatsApp bot built
+      for automation, moderation and entertainment.
+    </p>
+
+
+    <div class="about-box">
+
+      <p>
+        TEDDY-XMD provides powerful WhatsApp automation
+        features including group management, protection,
+        media downloading, AI tools, utilities and more.
+      </p>
+
+    </div>
+
+
+    <div class="about-box">
+
+      <p>
+        🚀 Fast pairing<br>
+        🛡️ Secure sessions<br>
+        🤖 Powerful automation<br>
+        📦 Open source<br>
+        🌐 Multi-device support
+      </p>
+
+    </div>
+
+
+    <button
+      class="secondary"
+      onclick="window.open(
+        'https://github.com/Teddyxmd/TEDDY-XMD',
+        '_blank'
+      )"
+    >
+      📦 View GitHub Repository
+    </button>
+
+
+    <button
+      class="secondary"
+      onclick="window.open(
+        'https://whatsapp.com/channel/0029Vb6NveDBPzjPa4vIRt3n',
+        '_blank'
+      )"
+    >
+      📢 Join WhatsApp Channel
+    </button>
+
+
+    <button
+      class="secondary"
+      onclick="window.open(
+        'https://chat.whatsapp.com/CLClgqJIC59GrcI4sRzLu8',
+        '_blank'
+      )"
+    >
+      👥 Join WhatsApp Group
+    </button>
+
+  </section>
+
+
+  <!-- FOOTER -->
+
+  <footer>
+
+    <div class="footer-brand">
+      TEDDY <span>XMD</span>
+    </div>
+
+    <div class="footer-sub">
+      Powered by Teddy Tech
+    </div>
+
+    <div class="footer-links">
+
+      <a
+        href="https://github.com/Teddyxmd/TEDDY-XMD"
+        target="_blank"
+      >
+        GitHub
+      </a>
+
+      <a
+        href="https://whatsapp.com/channel/0029Vb6NveDBPzjPa4vIRt3n"
+        target="_blank"
+      >
+        Channel
+      </a>
+
+      <a
+        href="https://chat.whatsapp.com/CLClgqJIC59GrcI4sRzLu8"
+        target="_blank"
+      >
+        Group
+      </a>
+
+    </div>
+
+  </footer>
+
+</main>
+
+
+<script>
+
+/* =========================
+   PAGE NAVIGATION
+========================= */
+
+document.querySelectorAll(".nav-tab").forEach(tab => {
+
+  tab.addEventListener("click", () => {
+
+    document
+      .querySelectorAll(".nav-tab")
+      .forEach(t => t.classList.remove("active"));
+
+    tab.classList.add("active");
+
+    document.getElementById("page-connect").style.display =
+      tab.dataset.page === "connect" ? "" : "none";
+
+    document.getElementById("page-commands").style.display =
+      tab.dataset.page === "commands" ? "" : "none";
+
+    document.getElementById("page-about").style.display =
+      tab.dataset.page === "about" ? "" : "none";
+
+  });
+
+});
+
+
+/* =========================
+   STEP CONTROL
+========================= */
+
+function show(id){
+
+  document
+    .querySelectorAll(".step")
+    .forEach(el => el.classList.remove("active"));
+
+  document
+    .getElementById(id)
+    .classList.add("active");
+
+}
+
+
+/* =========================
+   COPY
+========================= */
+
+async function copyText(text){
+
+  try{
+
+    await navigator.clipboard.writeText(text);
+
+    return true;
+
+  }catch{
+
+    const textarea = document.createElement("textarea");
+
+    textarea.value = text;
+    textarea.style.position = "fixed";
+    textarea.style.opacity = "0";
+
+    document.body.appendChild(textarea);
+
+    textarea.select();
+
+    let ok = false;
+
+    try{
+      ok = document.execCommand("copy");
+    }catch{}
+
+    textarea.remove();
+
+    return ok;
+
+  }
+
+}
+
+
+function flashButton(button,text){
+
+  const original = button.textContent;
+
+  button.textContent = text;
+
+  setTimeout(() => {
+    button.textContent = original;
+  },1500);
+
+}
+
+
+/* =========================
+   PAIRING CODE
+========================= */
+
+document
+  .getElementById("btn-request")
+  .addEventListener("click", async () => {
+
+    const phone =
+      document
+        .getElementById("phone")
+        .value
+        .trim();
+
+    const error =
+      document.getElementById("err-phone");
+
+    error.textContent = "";
+
+    if(!/^[0-9]{8,15}$/.test(phone)){
+
+      error.textContent =
+        "Enter a valid number with country code.";
+
+      return;
+
+    }
+
+    const button =
+      document.getElementById("btn-request");
+
+    button.disabled = true;
+
+    button.textContent =
+      "⏳ Generating code...";
+
+    try{
+
+      const response =
+        await fetch(
+          "/api/request-code",
+          {
+            method:"POST",
+            headers:{
+              "Content-Type":"application/json"
+            },
+            body:JSON.stringify({
+              phone
+            })
+          }
+        );
+
+      const data =
+        await response.json();
+
+      if(!response.ok){
+
+        throw new Error(
+          data.error || "Request failed"
+        );
+
+      }
+
+      poll(data.sessionKey);
+
+    }catch(error){
+
+      document.getElementById("err-msg")
+        .textContent = error.message;
+
+      show("step-error");
+
+    }
+
+  });
+
+
+/* =========================
+   QR REQUEST
+========================= */
+
+document
+  .getElementById("btn-request-qr")
+  .addEventListener("click", async () => {
+
+    const button =
+      document.getElementById("btn-request-qr");
+
+    button.disabled = true;
+
+    button.textContent =
+      "⏳ Generating QR...";
+
+    try{
+
+      const response =
+        await fetch(
+          "/api/request-qr",
+          {
+            method:"POST"
+          }
+        );
+
+      const data =
+        await response.json();
+
+      if(!response.ok){
+
+        throw new Error(
+          data.error || "Request failed"
+        );
+
+      }
+
+      poll(data.sessionKey);
+
+    }catch(error){
+
+      document.getElementById("err-msg")
+        .textContent = error.message;
+
+      show("step-error");
+
+    }
+
+  });
+
+
+/* =========================
+   PAIR / QR TABS
+========================= */
+
+document
+  .querySelectorAll(".mode-tab")
+  .forEach(tab => {
+
+    tab.addEventListener("click", () => {
+
+      document
+        .querySelectorAll(".mode-tab")
+        .forEach(t =>
+          t.classList.remove("active")
+        );
+
+      tab.classList.add("active");
+
+      const qr =
+        tab.dataset.mode === "qr";
+
+      document.getElementById("pair-fields")
+        .style.display = qr ? "none" : "block";
+
+      document.getElementById("qr-fields")
+        .style.display = qr ? "block" : "none";
+
+    });
+
+  });
+
+
+/* =========================
+   MENU
+========================= */
+
+const menu =
+  document.getElementById("menu");
+
+document
+  .getElementById("menu-btn")
+  .addEventListener("click", event => {
+
+    event.stopPropagation();
+
+    menu.classList.toggle("open");
+
+  });
+
+document.addEventListener("click", () => {
+
+  menu.classList.remove("open");
+
+});
+
+
+document
+  .getElementById("menu-about")
+  .addEventListener("click", event => {
+
+    event.preventDefault();
+
+    menu.classList.remove("open");
+
+    document
+      .querySelector('[data-page="about"]')
+      .click();
+
+  });
+
+
+/* =========================
+   STATS
+========================= */
+
+(async() => {
+
+  try{
+
+    const response =
+      await fetch("/api/stats");
+
+    const data =
+      await response.json();
+
+    document.getElementById("stats-pill")
+      .textContent =
+      `${(data.totalSessions || 0).toLocaleString()} linked`;
+
+  }catch{
+
+    document.getElementById("stats-pill")
+      .style.display = "none";
+
+  }
+
+})();
+
+
+/* =========================
+   RETRY
+========================= */
+
+document
+  .getElementById("btn-retry")
+  .addEventListener("click", () => {
+
+    document.getElementById("btn-request")
+      .disabled = false;
+
+    document.getElementById("btn-request")
+      .textContent =
+      "🚀 Get Pairing Code";
+
+    document.getElementById("btn-request-qr")
+      .disabled = false;
+
+    document.getElementById("btn-request-qr")
+      .textContent =
+      "📷 Generate QR Code";
+
+    show("step-phone");
+
+  });
+
+
+/* =========================
+   COPY PAIR CODE
+========================= */
+
+document
+  .getElementById("btn-copy-code")
+  .addEventListener("click", async () => {
+
+    const code =
+      document
+        .getElementById("pair-code")
+        .textContent
+        .trim();
+
+    if(!code || code === "----")
+      return;
+
+    const ok =
+      await copyText(code);
+
+    flashButton(
+      document.getElementById("btn-copy-code"),
+      ok ? "✅ Copied!" : "❌ Failed"
+    );
+
+  });
+
+
+/* =========================
+   COPY SESSION
+========================= */
+
+document
+  .getElementById("btn-copy")
+  .addEventListener("click", async () => {
+
+    const text =
+      document
+        .getElementById("session-out")
+        .value;
+
+    const ok =
+      await copyText(text);
+
+    flashButton(
+      document.getElementById("btn-copy"),
+      ok ? "✅ Copied!" : "❌ Failed"
+    );
+
+  });
+
+
+/* =========================
+   STATUS POLLING
+========================= */
+
+function poll(sessionKey){
+
+  let misses = 0;
+
+  const interval =
+    setInterval(async() => {
+
+      try{
+
+        const response =
+          await fetch(
+            "/api/status/" +
+            encodeURIComponent(sessionKey)
+          );
+
+        if(!response.ok){
+
+          misses++;
+
+          if(misses > 3){
+
+            clearInterval(interval);
+
+            let message =
+              "This pairing session has expired.";
+
+            try{
+
+              const errorData =
+                await response.json();
+
+              if(errorData.error)
+                message = errorData.error;
+
+            }catch{}
+
+            document.getElementById("err-msg")
+              .textContent = message;
+
+            show("step-error");
+
+          }
+
+          return;
+
+        }
+
+        misses = 0;
+
+        const data =
+          await response.json();
+
+
+        /* PAIRING CODE */
+
+        if(
+          data.status === "code" &&
+          data.code
+        ){
+
+          document.getElementById("pair-code")
+            .textContent = data.code;
+
+          show("step-code");
+
+        }
+
+
+        /* QR */
+
+        else if(
+          data.status === "qr" &&
+          data.qr
+        ){
+
+          document.getElementById("qr-image")
+            .src =
+            "https://api.qrserver.com/v1/create-qr-code/?size=280x280&data=" +
+            encodeURIComponent(data.qr);
+
+          show("step-qr");
+
+        }
+
+
+        /* CONNECTED */
+
+        else if(
+          data.status === "connected"
+        ){
+
+          clearInterval(interval);
+
+          document.getElementById("session-out")
+            .value =
+            data.sessionId || "";
+
+          if(data.repoUrl){
+
+            const link =
+              document.getElementById("repo-link");
+
+            link.href = data.repoUrl;
+
+            link.textContent =
+              "📦 " + data.repoUrl;
+
+          }
+
+          show("step-done");
+
+        }
+
+
+        /* ERROR */
+
+        else if(
+          data.status === "error" ||
+          data.status === "closed"
+        ){
+
+          clearInterval(interval);
+
+          document.getElementById("err-msg")
+            .textContent =
+            data.error ||
+            "Connection closed before linking finished.";
+
+          show("step-error");
+
+        }
+
+      }catch{
+
+        /*
+          Temporary network failure.
+          Continue polling.
+        */
+
+      }
+
+    },2000);
+
+}
+
+</script>
+
+</body>
+</html>
